@@ -1,11 +1,16 @@
-import { Component } from '@angular/core';
-import { DiffEditorModel } from 'ngx-monaco-editor';
+import {
+  Component,
+  ViewChild,
+  ElementRef
+} from '@angular/core'; import { DiffEditorModel } from 'ngx-monaco-editor';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html'
 })
 export class AppComponent {
+  @ViewChild('script') script: ElementRef;
+
   editorOptions = { theme: 'vs-dark', language: 'javascript' };
   code: string = 'function x() {\nconsole.log("Hello world!");\n}';
   /*  */
@@ -21,4 +26,11 @@ export class AppComponent {
     code: 'hello orlando!',
     language: 'text/plain'
   };
+
+  submit() {
+    var s = document.createElement("script");
+    s.type = "text/javascript";
+    s.text = "(function() {" + this.code + "})();"
+    this.script.nativeElement.appendChild(s);
+  }
 }
